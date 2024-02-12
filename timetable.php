@@ -11,7 +11,7 @@ class plgContentTimetable extends JPlugin
         }
     }
 
-    function shortcode_parse_atts($text) {
+    private function shortcode_parse_atts($text) {
         $atts = array();
         $pattern = '/(\w+)\s*=\s*[\'"]([^\'"]*)[\'"]/';
         if (preg_match_all($pattern, $text, $match, PREG_SET_ORDER)) {
