@@ -28,10 +28,16 @@ class plgContentTimetable extends JPlugin
                 $okr = isset($attributes['okr']) ? $attributes['okr'] : '';
                 $education_form_id = isset($attributes['education_form_id']) ? $attributes['education_form_id'] : '';
                 $lang = isset($attributes['lang']) ? $attributes['lang'] : '';
-                JHtml::_('script', 'https://unpkg.com/slim-select@latest/dist/slimselect.min.js');
+                JHtml::_('script', 'https://unpkg.com/slim-select@latest/dist/slimselect.min.js', [], null, true);
                 JHtml::_('stylesheet', 'https://unpkg.com/slim-select@latest/dist/slimselect.css');
                 JHtml::_('stylesheet', 'https://rozklad.udpu.edu.ua/css/stud.css');
-                JHtml::_('script', 'https://rozklad.udpu.edu.ua/js/stud.js', array('slimselect'), null);
+                JFactory::getDocument()->addScriptDeclaration('
+                  document.addEventListener("DOMContentLoaded", function() {
+                    var script = document.createElement("script");
+                    script.src = "https://rozklad.udpu.edu.ua/js/stud.js";
+                    document.body.appendChild(script);
+                  });
+                ');
                 $hide = [];
                 if ($faculty_id) {array_push($hide, "faculty_id");}
                 if ($education_form_id) {array_push($hide, "education_form_id");}
