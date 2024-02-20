@@ -8,7 +8,7 @@
     <authorEmail></authorEmail>
     <authorUrl>https://github.com/tguruslan</authorUrl>
     <version>1.0</version>
-    <description>вставте шорткод на сторінку [tmtbl_stud faculty_id='' okr='' education_form_id='' lang='']</description>
+    <description>вставте шорткод на сторінку [tmtbl_stud faculty_id='' okr='' education_form_id='' lang=''] або [tmtbl_teacher faculty_id='' lang='']</description>
     <files>
         <filename plugin="timetable">timetable.php</filename>
     </files>
