@@ -2,12 +2,12 @@
 <extension version="3.9" type="plugin" group="content" method="upgrade">
     <name>timetable</name>
     <author>Ruslan IOC</author>
-    <creationDate>2024-02-12</creationDate>
+    <creationDate>2024-02-20</creationDate>
     <copyright>© Розклад УДПУ ім. П.Тичини 2024</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <authorEmail></authorEmail>
     <authorUrl>https://github.com/tguruslan</authorUrl>
-    <version>1.0</version>
+    <version>1.2</version>
     <description>вставте шорткод на сторінку [tmtbl_stud faculty_id='' okr='' education_form_id='' lang=''] або [tmtbl_teacher faculty_id='' lang='']</description>
     <files>
         <filename plugin="timetable">timetable.php</filename>
