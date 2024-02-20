@@ -6,7 +6,10 @@ class plgContentTimetable extends JPlugin
 {
     public function onContentPrepare($context, &$article, &$params, $page = 0){
         if (strpos($article->text, '[tmtbl_stud') !== false) {
-            $article->text = $this->processShortcodes($article->text);
+            $article->text = $this->processStud($article->text);
+        }
+        if (strpos($article->text, '[tmtbl_teacher') !== false) {
+            $article->text = $this->processTeacher($article->text);
         }
     }
     private function shortcode_parse_atts($text) {
@@ -17,7 +20,7 @@ class plgContentTimetable extends JPlugin
         }
         return $atts;
     }
-    private function processShortcodes($content){
+    private function processStud($content){
         $pattern = '/\[tmtbl_stud(.*?)\]/i';
         preg_match_all($pattern, $content, $matches);
         if (!empty($matches[0])) {
@@ -43,6 +46,31 @@ class plgContentTimetable extends JPlugin
                 if ($education_form_id) {array_push($hide, "education_form_id");}
                 if ($okr) {array_push($hide, "okr");}
                 $html = '<div id="timetable" hide="' . implode(';', $hide) . '" faculty_id="' . $faculty_id . '" education_form_id="' . $education_form_id . '" okr="' . $okr . '" lang="' . $lang . '"></div>';
+                $content = str_replace($shortcode, $html, $content);
+            }
+        }
+        return $content;
+    }
+    private function processTeacher($content){
+        $pattern = '/\[tmtbl_teacher(.*?)\]/i';
+        preg_match_all($pattern, $content, $matches);
+        if (!empty($matches[0])) {
+            foreach ($matches[0] as $key => $match) {
+                $shortcode = $matches[0][$key];
+                $attributes = $this->shortcode_parse_atts($matches[1][$key]);
+                $faculty_id = isset($attributes['faculty_id']) ? $attributes['faculty_id'] : '';
+                $lang = isset($attributes['lang']) ? $attributes['lang'] : '';
+                JHtml::_('script', 'https://unpkg.com/slim-select@latest/dist/slimselect.min.js', [], null, true);
+                JHtml::_('stylesheet', 'https://unpkg.com/slim-select@latest/dist/slimselect.css');
+                JHtml::_('stylesheet', 'https://rozklad.udpu.edu.ua/css/teacher.css');
+                JFactory::getDocument()->addScriptDeclaration('
+                  document.addEventListener("DOMContentLoaded", function() {
+                    var script = document.createElement("script");
+                    script.src = "https://rozklad.udpu.edu.ua/js/teacher.js";
+                    document.body.appendChild(script);
+                  });
+                ');
+                $html = '<div id="timetable_teacher" faculty_id="' . $faculty_id . '" lang="' . $lang . '"></div>';
                 $content = str_replace($shortcode, $html, $content);
             }
         }
